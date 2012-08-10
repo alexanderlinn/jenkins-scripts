@@ -1,0 +1,39 @@
+Jenkins Scripts
+===============
+
+This repository contains scripts to install and drive web-validation tools for
+use with Jenkins (or, if you want to tweak them, other CI systems). These
+include:
+
+- Scripts to "refresh" web-sites based on SPIP and Drupal within a CI system.
+  These make certain assumptions about repository layout, database usage, and
+  the like.
+
+- Scripts to install the W3C HTML validator and validator.nu HTML5 validators.
+  These assume that they are run on a Debian-based distribution and use
+  dependencies from packages where possible.
+
+- A script to mirror a web-site (one maintained by a job using the scripts
+  mentioned above, for example) and pump it through an instance of the W3C
+  validator (as installed by the scripts mentioned above).
+
+To make best use of them, you might like run them like so:
+
+1. Install the W3C HTML validator with `validators/install-w3c-validator.sh`.
+
+2. Add Checkstyle XML support to it with
+   `validators/install-w3c-validator-checkstyle.sh`.
+
+3. Install the HTML5 validator with `validators/install-html5-validator.sh`.
+
+4. Configure Apache to serve the workspaces of Jenkins jobs. A configuration
+   like `apache/job-workspaces.conf` might help.
+
+4. Setup web-site jobs using `bin/update-drupal.sh`, `bin/update-magento.sh`,
+   `bin/update-spip.sh`.
+
+5. Setup validation jobs to execute `bin/validate.sh` and then check the
+   resulting reports.
+
+There is a *lot* more that could be done here, but this is something of a
+start.
